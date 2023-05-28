@@ -1,0 +1,11 @@
+{
+    "java.configuration.runtimes": [
+
+        {
+            "name": "JavaSE-1.8",
+            "path": "c:\\Users\\HP Prodesk 600 G1\\AppData\\Roaming\\Code\\User\\globalStorage\\pleiades.java-extension-pack-jdk\\java\\8"
+        }
+
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+}
