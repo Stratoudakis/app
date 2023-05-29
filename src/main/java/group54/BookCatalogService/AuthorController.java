@@ -1,8 +1,8 @@
 package group54.BookCatalogService;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,17 +26,17 @@ public void addNewAuthor(@RequestBody Author author){
 }
 
 @GetMapping("/{authorID}")
-public Author getAuthorByID(@PathVariable int authorID){
+public ResponseEntity<Author> getAuthorByID(@PathVariable int authorID){
 
     for(Author author:authors){
 
         if(author.getId()==authorID){
-            return author;
+            return ResponseEntity.ok(author);
         }
 
     }
 
-    return null;
+    return ResponseEntity.notFound().build();
 
 
 }
@@ -55,18 +55,18 @@ public void updateAuthor(@RequestBody Author author, @PathVariable int authorID)
     }
 }
 
-
-
 @DeleteMapping("/{authorID}")
-public void deleteAuthor(@PathVariable int authorID){
+public ResponseEntity<Void> deleteAuthor(@PathVariable int authorID){
 
     for(Author author:authors){
 
         if(author.getId()==authorID){
             authors.remove(author);
+            return ResponseEntity.ok().build();
         }
 
     }
+    return ResponseEntity.notFound().build();
 }
 
 }

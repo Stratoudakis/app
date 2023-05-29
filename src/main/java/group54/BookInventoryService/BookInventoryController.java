@@ -1,4 +1,4 @@
-package group54.BookCatalogService;
+package group54.BookInventoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import group54.BookCatalogService.Book;
+
 @RestController
 @RequestMapping("/books")
-public class BookController{
+public class BookInventoryController {
 
 private List<Book> books = new ArrayList<Book>();
 
@@ -44,13 +46,13 @@ public ResponseEntity<Book> getBookByID(@PathVariable int bookID){
 
     }
 
-    return ResponseEntity.notFound().build();
+    return null;
 
 
 }
 
 @PutMapping("/{bookID}")
-public ResponseEntity<Void> updateBook(@RequestBody Book book,@PathVariable  int bookID){
+public  ResponseEntity<Void> updateBook(@RequestBody Book book,@PathVariable  int bookID){
 
     for(Book newBook:books){
 
@@ -59,6 +61,7 @@ public ResponseEntity<Void> updateBook(@RequestBody Book book,@PathVariable  int
             newBook.setAuthor(book.getAuthor());
             newBook.setId(bookID);
             newBook.setPublicationDate(book.getPublicationDate());
+            newBook.setQuantity(book.getQuantity());
             return ResponseEntity.ok().build();
         }
 
@@ -69,7 +72,7 @@ public ResponseEntity<Void> updateBook(@RequestBody Book book,@PathVariable  int
 }
 
 @DeleteMapping("/{bookID}")
-public ResponseEntity<Void> deleteBook(@PathVariable int bookID){
+public  ResponseEntity<Void> deleteBook(@PathVariable int bookID){
 
     for(Book book:books){
 
@@ -82,5 +85,23 @@ public ResponseEntity<Void> deleteBook(@PathVariable int bookID){
 
     return ResponseEntity.notFound().build();
 }
+
+@PutMapping("/{bookID}/quantity")
+public ResponseEntity<Void> updateBookQuantity(int bookID, int quantity){
+
+    for(Book book:books){
+
+        if(book.getId()==bookID){
+        book.setQuantity(quantity);
+        return ResponseEntity.ok().build();
+        }
+
+    }
+
+    return ResponseEntity.notFound().build();
+
+}
+
+
 
 }

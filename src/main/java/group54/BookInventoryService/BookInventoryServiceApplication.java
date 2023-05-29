@@ -1,25 +1,20 @@
-package group54.BookCatalogService;
+package group54.BookInventoryService;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 
 
-@SpringBootApplication
-public class BookCatalogServiceApplication {
-
+public class BookInventoryServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BookCatalogServiceApplication.class, args);
+        SpringApplication.run(BookInventoryServiceApplication.class, args);
     }
 
     @Bean
     public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
         return server -> {
-            server.setPort(3001);
+            server.setPort(3002);
         };
     }
 }
-
-

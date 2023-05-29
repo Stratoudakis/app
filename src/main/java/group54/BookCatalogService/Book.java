@@ -1,22 +1,28 @@
 package group54.BookCatalogService;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Book {
     
     private String title;
     private String publicationDate;
-    private Author author;
+    private String author;
     private int id;
+    private int quantity;
 
-    Book(String title, String publicationDate, Author author, int id){
+    @JsonCreator
+    Book(@JsonProperty("title") String title,@JsonProperty("publicationDate") String publicationDate,@JsonProperty("author") String author, @JsonProperty("id") int id, @JsonProperty("quantity") int quantity){
 
         this.title = title;
         this.publicationDate = publicationDate;
         this.author = author;
         this.id = id;
+        this.quantity = quantity;
 
     }
 
-    public Author getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
@@ -32,7 +38,11 @@ public class Book {
         return title;
     }
 
-    public void setAuthor(Author author) {
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -46,5 +56,9 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
