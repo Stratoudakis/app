@@ -11,5 +11,4 @@ public class BookCatalogServiceApplication {
         SpringApplication.run(BookCatalogServiceApplication.class, args);
     }
 
-    
 }
