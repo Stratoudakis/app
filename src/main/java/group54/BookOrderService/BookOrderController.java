@@ -19,7 +19,9 @@ import group54.BookCatalogService.Book;
 @RequestMapping("/books")
 public class BookOrderController {
 
-    private List<Book> books = new ArrayList<Book>();
+
+    private List<Order> orders = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
     @GetMapping
     public List<Book> getAllBooks(){
@@ -36,18 +38,17 @@ public class BookOrderController {
     }
     
     @GetMapping("/{bookID}")
-    public ResponseEntity<Book> getBookByID(@PathVariable int bookID){
+    public Book getBookByID(@PathVariable int bookID){
     
         for(Book book:books){
     
             if(book.getId()==bookID){
-                return ResponseEntity.ok(book);
+                return book;
             }
     
         }
     
         return null;
-    
     
     }
     
@@ -87,12 +88,42 @@ public class BookOrderController {
     }
 
 
-    // @PostMapping("/orders")
-    // public ResponseEntity<Void> placeOrder(@PathVariable int bookID){
+    @PostMapping("/orders")
+    public ResponseEntity<Void> placeOrder(@RequestBody Order orderRequest){
 
+        int bookID = orderRequest.getBookID();
+        int quantity = orderRequest.getQuantity();
+        Book book = getBookByID(bookID);
+
+        if(book == null || book.getQuantity() < quantity){
+            return ResponseEntity.badRequest().build();
+        }
+        
+        book.setQuantity(book.getQuantity() - quantity);
+
+        getOrder(orderRequest);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping 
+    public ResponseEntity<Order> getOrder(@RequestBody Order savedOrder){
+
+    if(savedOrder == null){
+        return ResponseEntity.badRequest().build();
+    }
+
+    for(Order order:orders){
+
+        if(order.getBookID() == savedOrder.getBookID()){
+
+            return ResponseEntity.ok(order);
+        }
+
+    }
+
+    return ResponseEntity.notFound().build();
     
-
-
-    // }
+    }
     
 }
